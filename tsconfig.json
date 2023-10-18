@@ -6,7 +6,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "types": [
-      "mocha",
       "cypress"
     ],
 
