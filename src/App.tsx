@@ -6,8 +6,9 @@ import Navigation from './routes/navigation/Navigation.component';
 const App = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<Navigation />}></Route>
-			<Route index element={<Home />}></Route>
+			<Route path="/" element={<Navigation />}>
+				<Route index element={<Home />}></Route>
+			</Route>
 		</Routes>
 	);
 };
