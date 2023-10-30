@@ -17,14 +17,29 @@ const SignUpForm = () => {
 
 	const [formFields, setFormFields] = useState<FormFields>(initialValues);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+	const calculateNewStateFormFields = (
+		currentState: FormFields,
+		event: ChangeEvent<HTMLInputElement>
+	) => {
 		const {name, value} = event.target;
-		setFormFields({...formFields, [name]: value});
+		return {...currentState, [name]: value};
+	};
+
+	function handleFormSubmission(formData: FormFields) {
+		console.log(formData);
+		// TODO: logic
+	}
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const newState = calculateNewStateFormFields(formFields, event);
+		setFormFields(newState);
+		console.log(formFields);
 	};
 
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		console.log(formFields);
+		handleFormSubmission(formFields);
 	};
 
 	return (
