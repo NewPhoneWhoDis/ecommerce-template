@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+
 import config from '../config';
+import userRoutes from './routes/userRoutes';
 
 const app = express();
 
@@ -11,6 +13,7 @@ app.use(
 	})
 );
 app.use(express.json());
+app.use('/api/users', userRoutes);
 
 if (config && config.mongoURI !== undefined) {
 	mongoose

@@ -1,5 +1,5 @@
 import mongoose, {Document, Schema} from 'mongoose';
-
+import bcrypt from 'bcryptjs';
 interface IUser extends Document {
 	firstName?: string;
 	lastName?: string;
@@ -7,6 +7,7 @@ interface IUser extends Document {
 	email: string;
 	password: string;
 	role: 'user' | 'admin';
+	matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -22,6 +23,20 @@ const userSchema = new Schema<IUser>({
 		enum: ['user', 'admin'],
 	},
 });
+
+userSchema.pre('save', async function (next) {
+	if (!this.isModified('password')) {
+		return next();
+	}
+
+	const salt = await bcrypt.genSalt(10);
+	this.password = await bcrypt.hash(this.password, salt);
+	return next();
+});
+
+userSchema.methods.matchPassword = async function (enteredPassword: string) {
+	return bcrypt.compare(this.password, enteredPassword);
+};
 
 const user = mongoose.model<IUser>('User', userSchema);
 
