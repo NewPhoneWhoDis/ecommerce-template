@@ -7,7 +7,7 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"outDir": "./dist",
-		"types": ["node", "bcryptjs", "jsonwebtoken"]
+		"types": ["node", "bcryptjs", "jsonwebtoken", "jest"]
 	},
 	"include": ["./src/**/*.ts", "./server.ts"],
 	"exclude": ["node_modules"]
