@@ -31,7 +31,7 @@ export const loggedUser = async (req: Request, res: Response) => {
 
 export const registerUser = async (req: Request, res: Response) => {
 	try {
-		const {username, firstName, lastName, email, password} = req.params;
+		const {username, firstName, lastName, email, password} = req.body;
 
 		const result = await createUser({
 			username,

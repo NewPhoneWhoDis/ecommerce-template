@@ -1,7 +1,10 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
+import useAuth from '../hooks/useAuth';
 
 interface FormFields {
 	username: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -10,12 +13,15 @@ interface FormFields {
 const SignUpForm = () => {
 	const initialValues: FormFields = {
 		username: '',
+		firstName: '',
+		lastName: '',
 		email: '',
 		password: '',
 		confirmPassword: '',
 	};
 
 	const [formFields, setFormFields] = useState<FormFields>(initialValues);
+	const {errorMessage, handleAuth, isSubmitting} = useAuth<FormFields>();
 
 	const calculateNewStateFormFields = (
 		currentState: FormFields,
@@ -27,7 +33,7 @@ const SignUpForm = () => {
 
 	function handleFormSubmission(formData: FormFields) {
 		console.log(formData);
-		// TODO: logic
+		handleAuth('register', formData);
 	}
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +48,6 @@ const SignUpForm = () => {
 		handleFormSubmission(formFields);
 	};
 
-	// add first name and last name
-
 	return (
 		<div>
 			<h1>Sign up with your email and password</h1>
@@ -55,6 +59,22 @@ const SignUpForm = () => {
 					name="username"
 					required
 					value={formFields.username}
+					onChange={handleChange}
+				/>
+				<label>First Name</label>
+				<input
+					type="text"
+					name="firstName"
+					required
+					value={formFields.firstName}
+					onChange={handleChange}
+				/>
+				<label>Last Name</label>
+				<input
+					type="text"
+					name="lastName"
+					required
+					value={formFields.lastName}
 					onChange={handleChange}
 				/>
 				<label>Email</label>
@@ -81,8 +101,11 @@ const SignUpForm = () => {
 					value={formFields.confirmPassword}
 					onChange={handleChange}
 				/>
-				<button type="submit">Sign Up</button>
+				<button type="submit" disabled={isSubmitting}>
+					Sign Up
+				</button>
 			</form>
+			{errorMessage && <p className="error-message">{errorMessage}</p>}
 		</div>
 	);
 };

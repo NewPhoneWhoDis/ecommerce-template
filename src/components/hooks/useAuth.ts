@@ -15,7 +15,10 @@ const useAuth = <T>() => {
 		setIsSubmitting(true);
 
 		try {
-			const response = await axios.post(`${BASE_API_URL}/${endpoint}`, data);
+			const response = await axios.post(
+				`${BASE_API_URL}/api/users/${endpoint}`,
+				data
+			);
 			console.log(response.data.message);
 			setIsSubmitting(false);
 		} catch (error) {
