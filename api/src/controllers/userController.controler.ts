@@ -3,8 +3,8 @@ import {
 	createUser,
 	findUserByUsernameOrEmail,
 } from '../services/userService.service';
-import {generateToken} from '../auth/authHelper';
 import logger from '../../logger';
+import {setAuthCookies} from '../auth/authHelper';
 
 export const logUser = async (req: Request, res: Response) => {
 	try {
@@ -22,9 +22,9 @@ export const logUser = async (req: Request, res: Response) => {
 			return res.status(401).json('Invalid credentials');
 		}
 
-		const token = generateToken(user._id.toString());
+		setAuthCookies(res, user._id.toString());
 		logger.info('User logged in successfully');
-		return res.status(200).json({token});
+		return res.status(200).json('Login successful!');
 	} catch (error) {
 		console.log(
 			error instanceof Error
@@ -41,23 +41,20 @@ export const registerUser = async (req: Request, res: Response) => {
 	try {
 		const {username, firstName, lastName, email, password} = req.body;
 
-		const result = await createUser({
+		const user = await createUser({
 			username,
 			firstName,
 			lastName,
 			email,
 			password,
 		});
-		if (typeof result === 'string') {
-			return res.status(400).json({message: result});
+		if (typeof user === 'string') {
+			return res.status(400).json({message: user});
 		}
 
-		const token = generateToken(result._id.toString());
-
+		setAuthCookies(res, user._id.toString());
 		logger.info('User registered in successfully');
-		return res
-			.status(201)
-			.json({message: 'User registered successfully', token});
+		return res.status(201).json({message: 'User registered successfully'});
 	} catch (error) {
 		console.log(
 			error instanceof Error
