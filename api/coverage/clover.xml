@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1701825226612" clover="3.2.0">
-  <project timestamp="1701825226612" name="All files">
+<coverage generated="1702157299293" clover="3.2.0">
+  <project timestamp="1702157299293" name="All files">
     <metrics statements="33" coveredstatements="33" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3" elements="39" coveredelements="39" complexity="0" loc="33" ncloc="33" packages="1" files="1" classes="1"/>
     <file name="authHelper.ts" path="/Users/kristiyanmerdzhov/Repos/ecommerse-template/api/src/auth/authHelper.ts">
       <metrics statements="33" coveredstatements="33" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
